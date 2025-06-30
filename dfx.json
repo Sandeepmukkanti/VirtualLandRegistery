@@ -1,0 +1,38 @@
+{
+  "canisters": {
+    "internet_identity": {
+      "candid": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity.did",
+      "frontend": {},
+      "remote": {
+        "id": {
+          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+        }
+      },
+      "type": "custom",
+      "wasm": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity_dev.wasm.gz"
+    },
+    "virtual_land_registry_backend": {
+      "candid": "src/virtual_land_registry_backend/virtual_land_registry_backend.did",
+      "package": "virtual_land_registry_backend",
+      "type": "rust"
+    },
+    "virtual_land_registry_frontend": {
+      "dependencies": [
+        "virtual_land_registry_backend"
+      ],
+      "source": [
+        "src/virtual_land_registry_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "virtual_land_registry_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
