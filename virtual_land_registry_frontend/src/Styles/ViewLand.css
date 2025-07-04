@@ -1,0 +1,63 @@
+.viewland-wrapper {
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* horizontal center */
+  justify-content: flex-start; /* change to center if you want full vertical center */
+ /* optional background */
+}
+
+.viewland-page-title {
+  font-size: 2rem;
+  text-align: center;
+  color: #1e3a8a;
+  margin-bottom: 2rem;
+}
+
+.viewland-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px; /* keeps content centered in big screens */
+  justify-content: center;
+  padding: 0 2rem;
+}
+
+.viewland-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.viewland-card:hover {
+  transform: translateY(-5px);
+}
+
+.viewland-title {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #1e3a8a;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.status-badge.owned {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge.listed {
+  background-color: #fee2e2;
+  color: #991b1b;
+}

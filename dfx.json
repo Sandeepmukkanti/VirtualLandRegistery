@@ -21,7 +21,8 @@
         "virtual_land_registry_backend"
       ],
       "source": [
-        "src/virtual_land_registry_frontend/dist"
+       "src/virtual_land_registry_frontend/build"
+
       ],
       "type": "assets",
       "workspace": "virtual_land_registry_frontend"
