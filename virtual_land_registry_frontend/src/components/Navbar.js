@@ -42,7 +42,7 @@ export default function Navbar() {
            <li><Link to="/Dashboard">mine</Link></li>
             <li><Link to="/register">Register</Link></li>
             <li><Link to="/buy">Buy</Link></li>
-            <li><Link to="/sell">Sell</Link></li>
+         
            
             <li>
               <button

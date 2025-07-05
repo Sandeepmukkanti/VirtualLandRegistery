@@ -33,7 +33,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterLand />} />
         <Route path="/buy" element={<BuyLand />} />
-        <Route path="/sell" element={<SellLand />} />
+       
         <Route path="/signup" element={<Signup/>} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/land/:id" element={<ViewLand/>} />

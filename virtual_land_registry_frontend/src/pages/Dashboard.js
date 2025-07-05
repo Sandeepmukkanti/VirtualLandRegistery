@@ -1,18 +1,46 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../Styles/Dashboard.css';
 
 export default function Dashboard() {
   const username = localStorage.getItem('user');
+  const [lands, setLands] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const [lands, setLands] = useState([
-    { id: '12345', location: 'Sector A', status: 'Owned' },
-    { id: '67890', location: 'Sector C', status: 'Listed' }
-  ]);
+  // Load lands owned by current user
+  useEffect(() => {
+    const allLands = JSON.parse(localStorage.getItem('lands')) || [];
+    const myLands = allLands.filter((land) => land.owner === username);
+    setLands(myLands);
+  }, [location, username]);
 
+  // Cancel selling a land (set back to 'Owned')
   const handleCancel = (id) => {
-    const updated = lands.filter(land => land.id !== id);
-    setLands(updated);
+    const updatedLands = lands.map((land) =>
+      land.id === id ? { ...land, status: 'Owned' } : land
+    );
+    setLands(updatedLands);
+
+    const allLands = JSON.parse(localStorage.getItem('lands')) || [];
+    const updatedAll = allLands.map((land) =>
+      land.id === id ? { ...land, status: 'Owned' } : land
+    );
+    localStorage.setItem('lands', JSON.stringify(updatedAll));
+  };
+
+  // Mark land as Listed for sale
+  const handleSell = (id) => {
+    const updatedLands = lands.map((land) =>
+      land.id === id ? { ...land, status: 'Listed' } : land
+    );
+    setLands(updatedLands);
+
+    const allLands = JSON.parse(localStorage.getItem('lands')) || [];
+    const updatedAll = allLands.map((land) =>
+      land.id === id ? { ...land, status: 'Listed' } : land
+    );
+    localStorage.setItem('lands', JSON.stringify(updatedAll));
   };
 
   return (
@@ -22,15 +50,24 @@ export default function Dashboard() {
 
       <div className="dashboard-summary">
         <div className="summary-card">
-          <h3>🏠 {lands.filter(land => land.status === 'Owned').length} Lands Owned</h3>
+          <h3>🏠 {lands.filter((land) => land.status === 'Owned').length} Lands Owned</h3>
           <p>Securely registered and managed.</p>
         </div>
         <div className="summary-card">
-          <h3>💼 {lands.filter(land => land.status === 'Listed').length} Listed for Sale</h3>
+          <h3>💼 {lands.filter((land) => land.status === 'Listed').length} Listed for Sale</h3>
           <p>Actively visible in the marketplace.</p>
         </div>
         <div className="summary-card">
-          <h3>🛒 0 Purchases</h3>
+          <h3>
+            🛒 {
+              lands.filter(
+                (land) =>
+                  land.status === 'Owned' &&
+                  land.originalOwner &&
+                  land.originalOwner !== username
+              ).length
+            } Purchases
+          </h3>
           <p>Browse listings and expand your holdings.</p>
         </div>
       </div>
@@ -44,21 +81,12 @@ export default function Dashboard() {
         </Link>
       </div>
 
-      <div className="dashboard-activity">
-        <h3>📜 Recent Activity</h3>
-        <ul>
-          <li>✅ Registered land #12345 in Sector A</li>
-          <li>💼 Listed land #12345 for sale</li>
-          <li>❌ Canceled sale for land #56789</li>
-        </ul>
-      </div>
-
-      {/* ✅ Dynamically render lands */}
       <div className="dashboard-land-table">
         <h3>🗺️ My Lands</h3>
         <table>
           <thead>
             <tr>
+              <th>Image</th>
               <th>Land ID</th>
               <th>Location</th>
               <th>Status</th>
@@ -68,6 +96,17 @@ export default function Dashboard() {
           <tbody>
             {lands.map((land) => (
               <tr key={land.id}>
+                <td>
+                  {land.image ? (
+                    <img
+                      src={land.image}
+                      alt="Land"
+                      style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '6px' }}
+                    />
+                  ) : (
+                    'No Image'
+                  )}
+                </td>
                 <td>#{land.id}</td>
                 <td>{land.location}</td>
                 <td>
@@ -80,14 +119,11 @@ export default function Dashboard() {
                     <button className="action-button">View</button>
                   </Link>
                   {land.status === 'Owned' ? (
-                    <Link to="/sell">
-                      <button className="action-button danger">Sell</button>
-                    </Link>
+                    <button className="action-button danger" onClick={() => handleSell(land.id)}>
+                      Sell
+                    </button>
                   ) : (
-                    <button
-                      className="action-button danger"
-                      onClick={() => handleCancel(land.id)}
-                    >
+                    <button className="action-button danger" onClick={() => handleCancel(land.id)}>
                       Cancel
                     </button>
                   )}
