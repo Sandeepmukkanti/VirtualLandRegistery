@@ -58,7 +58,7 @@ export default function ViewLand() {
           <p><strong>📝 Description:</strong> {land.description}</p>
           <p><strong>📅 Registered On:</strong> {land.registration_date}</p>
           <p><strong>🧑 Owner:</strong> {land.owner}</p>
-          <p><strong>🧾 Original Owner:</strong> {land.original_owner}</p>
+          
           <p><strong>Status:</strong> <span className={`status-badge ${land.status.toLowerCase()}`}>{land.status}</span></p>
 
           {land.image && (
@@ -70,6 +70,29 @@ export default function ViewLand() {
           )}
         </div>
       </div>
+         {/* Footer */}
+      <footer className="footer" data-aos="fade-up" data-aos-delay="300">
+        <div className="footer-container">
+          <div className="footer-brand">
+            <h3>Virtual Land Registry</h3>
+            <p>
+              Enabling trusted virtual land transactions through the power of the Internet
+              Computer Protocol (ICP).
+            </p>
+          </div>
+
+          <div className="footer-links">
+            <a href="">Privacy Policy</a>
+            <a href="">Terms & Conditions</a>
+            <a href="">Support</a>
+          </div>
+
+          <p className="footer-copy">
+            &copy; {new Date().getFullYear()} Virtual Land Registry. Built for the decentralized
+            future.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

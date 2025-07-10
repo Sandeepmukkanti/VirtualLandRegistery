@@ -126,6 +126,7 @@ export default function RegisterLand() {
   };
 
   return (
+    <div>
     <div className="register-land-container">
       <h2 className="form-title">📜 Register New Land</h2>
       <p className="form-subtitle">Fill the details to register your land on ICP.</p>
@@ -167,6 +168,31 @@ export default function RegisterLand() {
 
         <button type="submit" className="register-btn">Submit Land</button>
       </form>
+     
+    </div>
+        {/* Footer */}
+      <footer className="footer" data-aos="stick" data-aos-delay="300">
+        <div className="footer-container">
+          <div className="footer-brand">
+            <h3>Virtual Land Registry</h3>
+            <p>
+              Enabling trusted virtual land transactions through the power of the Internet
+              Computer Protocol (ICP).
+            </p>
+          </div>
+
+          <div className="footer-links">
+            <a href="">Privacy Policy</a>
+            <a href="">Terms & Conditions</a>
+            <a href="">Support</a>
+          </div>
+
+          <p className="footer-copy">
+            &copy; {new Date().getFullYear()} Virtual Land Registry. Built for the decentralized
+            future.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -14,6 +14,7 @@ export default function Login() {
   };
 
   return (
+    <div>
     <div className="login-container">
       <div className="login-box">
         <h1 className="login-title">🌐 Virtual Land Registry</h1>
@@ -23,5 +24,30 @@ export default function Login() {
         </button>
       </div>
     </div>
+    {/* Footer */}
+      <footer className="footer" data-aos="stick" data-aos-delay="300">
+        <div className="footer-container">
+          <div className="footer-brand">
+            <h3>Virtual Land Registry</h3>
+            <p>
+              Enabling trusted virtual land transactions through the power of the Internet
+              Computer Protocol (ICP).
+            </p>
+          </div>
+
+          <div className="footer-links">
+            <a href="">Privacy Policy</a>
+            <a href="">Terms & Conditions</a>
+            <a href="">Support</a>
+          </div>
+
+          <p className="footer-copy">
+            &copy; {new Date().getFullYear()} Virtual Land Registry. Built for the decentralized
+            future.
+          </p>
+        </div>
+      </footer>
+</div>
+
   );
 }

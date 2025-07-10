@@ -68,6 +68,7 @@ export default function Dashboard() {
   const shortUser = user ? `...${user.slice(-6)}` : '';
 
   return (
+    <div>
     <div className="dashboard-container">
       <h2 className="dashboard-title">Welcome back, {shortUser}! 👋</h2>
       <p className="dashboard-subtitle">Manage your virtual properties on the ICP blockchain.</p>
@@ -177,6 +178,31 @@ export default function Dashboard() {
           </tbody>
         </table>
       </div>
+    
+    </div>
+         {/* Footer */}
+      <footer className="footer" data-aos="stick" data-aos-delay="300">
+        <div className="footer-container">
+          <div className="footer-brand">
+            <h3>Virtual Land Registry</h3>
+            <p>
+              Enabling trusted virtual land transactions through the power of the Internet
+              Computer Protocol (ICP).
+            </p>
+          </div>
+
+          <div className="footer-links">
+            <a href="">Privacy Policy</a>
+            <a href="">Terms & Conditions</a>
+            <a href="">Support</a>
+          </div>
+
+          <p className="footer-copy">
+            &copy; {new Date().getFullYear()} Virtual Land Registry. Built for the decentralized
+            future.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -87,7 +87,7 @@ export default function Home() {
       </div>
 
       {/* Features Section */}
-      <div className="features-section" data-aos="fade-up" data-aos-delay="300">
+      <div className="features-section" data-aos="stick" data-aos-delay="300">
         <h2 className="features-heading">Platform Highlights</h2>
         <div className="features-grid">
           <div className="feature-card">

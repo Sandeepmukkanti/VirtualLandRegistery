@@ -26,7 +26,7 @@ export function UserProvider({ children }) {
     if (!authClient) return;
 
     await authClient.login({
-      identityProvider: `http://localhost:4943?canisterId=rdmx6-jaaaa-aaaaa-aaadq-cai`, // 👈 local Internet Identity
+      identityProvider: `http://localhost:4943?canisterId=u6s2n-gx777-77774-qaaba-cai`, // ✅ Use your Internet Identity canister
       onSuccess: async () => {
         const identity = authClient.getIdentity();
         const principal = identity.getPrincipal().toText();
