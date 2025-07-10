@@ -36,9 +36,9 @@ export default function Login() {
           </div>
 
           <div className="footer-links">
-            <a href="">Privacy Policy</a>
-            <a href="">Terms & Conditions</a>
-            <a href="">Support</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Support</a>
           </div>
 
           <p className="footer-copy">

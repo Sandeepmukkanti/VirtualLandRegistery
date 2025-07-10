@@ -35,8 +35,10 @@ export default function BuyLand() {
 
     // ✅ Debug: Check available methods in the actor
     const debugActor = async () => {
+    
       const agent = new HttpAgent({ host: 'http://localhost:4943' });
       await agent.fetchRootKey();
+        
       const actor = Actor.createActor(idlFactory, {
         agent,
         canisterId: canisterIds.virtual_land_registry_backend.local,

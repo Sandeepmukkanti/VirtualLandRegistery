@@ -46,6 +46,7 @@ export default function ViewLand() {
   }
 
   return (
+    <div>
     <div className="viewland-wrapper">
       <h2 className="viewland-page-title">📍 Land Details</h2>
       <div className="viewland-grid">
@@ -70,8 +71,10 @@ export default function ViewLand() {
           )}
         </div>
       </div>
-         {/* Footer */}
-      <footer className="footer" data-aos="fade-up" data-aos-delay="300">
+         
+    </div>
+    {/* Footer */}
+      <footer className="footer" data-aos="stick" data-aos-delay="300">
         <div className="footer-container">
           <div className="footer-brand">
             <h3>Virtual Land Registry</h3>
@@ -82,9 +85,9 @@ export default function ViewLand() {
           </div>
 
           <div className="footer-links">
-            <a href="">Privacy Policy</a>
-            <a href="">Terms & Conditions</a>
-            <a href="">Support</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Support</a>
           </div>
 
           <p className="footer-copy">

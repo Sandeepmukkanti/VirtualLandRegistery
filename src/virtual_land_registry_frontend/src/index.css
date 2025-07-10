@@ -6,7 +6,6 @@ body {
   font-family: 'Segoe UI', sans-serif;
 }
 
-
 /* === Navbar Styling === */
 .nav {
   background-color: #1e3a8a;
@@ -25,16 +24,29 @@ nav ul {
   margin: 0;
 }
 
-nav ul li a {
+/* Common style for all links and logout button */
+.nav-link {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  font-size:x-large;
+  font-size: x-large;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
 }
 
-nav ul li a:hover {
+/* Hover effect */
+.nav-link:hover {
   text-decoration: underline;
 }
+
+/* Optional: remove default button outline */
+.logout-btn:focus {
+  outline: none;
+}
+
 
 /* === Home Page Styling === */
 .home-container {
