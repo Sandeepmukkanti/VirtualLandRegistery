@@ -1,7 +1,8 @@
 use candid::{CandidType, Deserialize};
-use ic_cdk_macros::{update, query};
+use ic_cdk_macros::{update, query, pre_upgrade, post_upgrade};
 use std::cell::RefCell;
 use std::collections::HashMap;
+use ic_cdk::storage::{stable_save, stable_restore};
 
 type Principal = String;
 
@@ -20,9 +21,21 @@ pub struct Land {
     pub status: String,
 }
 
-// In-memory storage for all lands
+// Persistent in-memory storage
 thread_local! {
     static LANDS: RefCell<HashMap<String, Land>> = RefCell::new(HashMap::new());
+}
+
+#[pre_upgrade]
+fn pre_upgrade() {
+    let lands = LANDS.with(|lands| lands.borrow().clone());
+    stable_save((lands,)).expect("Failed to save state before upgrade");
+}
+
+#[post_upgrade]
+fn post_upgrade() {
+    let (saved_lands,): (HashMap<String, Land>,) = stable_restore().expect("Failed to restore state after upgrade");
+    LANDS.with(|lands| *lands.borrow_mut() = saved_lands);
 }
 
 #[update]
