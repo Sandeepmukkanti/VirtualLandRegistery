@@ -1,3 +1,22 @@
+type Land = record {
+  id: text;
+  title: text;
+  location: text;
+  area: text;
+  price: float64;
+  description: text;
+  registration_date: text;
+  image: text;
+  owner: text;
+  original_owner: text;
+  status: text;
+};
+
 service : {
-    "greet": (text) -> (text) query;
-}
+  register_land: (Land) -> ();
+  get_all_lands: () -> (vec Land) query;
+  get_land_by_id: (text) -> (opt Land) query;
+  update_land_status: (text, text) -> (bool);
+  delete_land: (text) -> (bool);
+  transfer_ownership: (text, text) -> (bool); // ✅ <--- Add this line
+};

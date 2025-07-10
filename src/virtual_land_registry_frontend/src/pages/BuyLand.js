@@ -1,39 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../Styles/BuyLand.css';
+import { useUser } from '../contexts/UserContext';
+
+import { Actor, HttpAgent } from '@dfinity/agent';
+import { idlFactory } from '../declarations/virtual_land_registry_backend/virtual_land_registry_backend.did.js';
+import canisterIds from './canister_ids.json';
 
 export default function BuyLand() {
   const [lands, setLands] = useState([]);
   const location = useLocation();
-  const currentUser = localStorage.getItem('user');
+  const { user } = useUser();
+
+  const fetchListedLands = async () => {
+    try {
+      const agent = new HttpAgent({ host: 'http://localhost:4943' });
+      await agent.fetchRootKey();
+      const actor = Actor.createActor(idlFactory, {
+        agent,
+        canisterId: canisterIds.virtual_land_registry_backend.local,
+      });
+
+      const all = await actor.get_all_lands();
+      const listed = all.filter((land) => land.status === 'Listed');
+      setLands(listed);
+    } catch (err) {
+      console.error('❌ Failed to fetch listed lands:', err);
+    }
+  };
 
   useEffect(() => {
-    const allLands = JSON.parse(localStorage.getItem('lands')) || [];
-    const listedLands = allLands.filter((land) => land.status === 'Listed');
-    setLands(listedLands);
+    fetchListedLands();
   }, [location]);
 
-  const handleBuy = (id) => {
-    const allLands = JSON.parse(localStorage.getItem('lands')) || [];
+  const handleBuy = async (id) => {
+    try {
+      const agent = new HttpAgent({ host: 'http://localhost:4943' });
+      await agent.fetchRootKey();
+      const actor = Actor.createActor(idlFactory, {
+        agent,
+        canisterId: canisterIds.virtual_land_registry_backend.local,
+      });
 
-    const updatedLands = allLands.map((land) => {
-      if (land.id === id && land.status === 'Listed') {
-        return {
-          ...land,
-          owner: currentUser,
-          status: 'Owned',
-          originalOwner: land.originalOwner || land.owner, // track who listed it
-        };
+      const success = await actor.transfer_ownership(id, user);
+      if (success) {
+        alert('✅ Land purchased successfully!');
+        fetchListedLands();
+      } else {
+        alert('❌ Purchase failed. Try again.');
       }
-      return land;
-    });
-
-    localStorage.setItem('lands', JSON.stringify(updatedLands));
-
-    const newListed = updatedLands.filter((land) => land.status === 'Listed');
-    setLands(newListed);
-
-    alert('✅ Land purchased successfully! Ownership transferred.');
+    } catch (err) {
+      console.error('❌ Error during purchase:', err);
+    }
   };
 
   return (
@@ -52,12 +70,14 @@ export default function BuyLand() {
                 <p><strong>💰 Price:</strong> ₹{land.price}</p>
                 <p><strong>🧑 Owner:</strong> {land.owner}</p>
                 <p><strong>📝 Description:</strong> {land.description}</p>
-                <p><strong>📅 Registered On:</strong> {land.registrationDate}</p>
+                <p><strong>📅 Registered On:</strong> {land.registration_date}</p>
+
                 <div className="buyland-actions">
                   <Link to={`/land/${land.id}`}>
                     <button className="buyland-button">👁️ View</button>
                   </Link>
-                  {land.owner !== currentUser && (
+
+                  {land.owner !== user && (
                     <button
                       className="buyland-button-primary"
                       onClick={() => handleBuy(land.id)}
@@ -67,6 +87,7 @@ export default function BuyLand() {
                   )}
                 </div>
               </div>
+
               <div className="buyland-card-image">
                 {land.image ? (
                   <img

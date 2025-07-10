@@ -14,5 +14,13 @@
   "type": "module",
   "workspaces": [
     "src/virtual_land_registry_frontend"
-  ]
+  ],
+  "dependencies": {
+    "@dfinity/agent": "^2.4.1",
+    "@dfinity/auth-client": "^2.4.1",
+    "browser-image-compression": "^2.0.2"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1"
+  }
 }
