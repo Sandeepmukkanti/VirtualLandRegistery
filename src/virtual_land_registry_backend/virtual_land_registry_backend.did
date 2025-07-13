@@ -7,6 +7,7 @@ type Land = record {
   description: text;
   registration_date: text;
   image: text;
+  pdf: opt text; // ✅ NEW: IPFS link to uploaded PDF
   owner: text;
   original_owner: text;
   status: text;
@@ -18,5 +19,5 @@ service : {
   get_land_by_id: (text) -> (opt Land) query;
   update_land_status: (text, text) -> (bool);
   delete_land: (text) -> (bool);
-  transfer_ownership: (text, text) -> (bool); // ✅ <--- Add this line
+  transfer_ownership: (text, text) -> (bool);
 };

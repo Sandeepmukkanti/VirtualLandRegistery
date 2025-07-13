@@ -16,6 +16,7 @@ pub struct Land {
     pub description: String,
     pub registration_date: String,
     pub image: String,
+       pub pdf: String,
     pub owner: Principal,
     pub original_owner: Principal,
     pub status: String,
@@ -40,10 +41,13 @@ fn post_upgrade() {
 
 #[update]
 fn register_land(land: Land) {
+  ic_cdk::println!("📥 Registered Land with PDF: {}", land.pdf);
+
     LANDS.with(|lands| {
         lands.borrow_mut().insert(land.id.clone(), land);
     });
 }
+
 
 #[query]
 fn get_all_lands() -> Vec<Land> {

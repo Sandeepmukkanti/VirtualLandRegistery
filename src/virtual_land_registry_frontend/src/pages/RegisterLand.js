@@ -2,11 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../Styles/RegisterLand.css';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
-
 import { HttpAgent, Actor } from '@dfinity/agent';
 import { idlFactory } from '../declarations/virtual_land_registry_backend/virtual_land_registry_backend.did.js';
 import canisterIds from './canister_ids.json';
-import imageCompression from 'browser-image-compression'; // ✅ Import compression lib
+import imageCompression from 'browser-image-compression';
 
 export default function RegisterLand() {
   const { user } = useUser();
@@ -21,15 +20,15 @@ export default function RegisterLand() {
     description: '',
     registrationDate: new Date().toISOString().split('T')[0],
     image: '',
+    pdf: '',
   });
 
   const [error, setError] = useState('');
+  const [uploadingPdf, setUploadingPdf] = useState(false);
 
   useEffect(() => {
     const initActor = async () => {
       const canisterId = canisterIds.virtual_land_registry_backend.local;
-      if (!canisterId) return setError('❌ Backend canister ID missing.');
-
       try {
         const agent = new HttpAgent({ host: 'http://localhost:4943' });
         await agent.fetchRootKey();
@@ -38,67 +37,99 @@ export default function RegisterLand() {
           canisterId,
         });
       } catch (err) {
-        console.error('❌ Actor init failed:', err);
-        setError('❌ Backend connection error.');
+        setError('❌ Failed to connect to backend.');
       }
     };
-
     initActor();
   }, []);
 
-  const handleChange = (e) =>
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-
-    if (!file) {
-      setError('❌ No image selected.');
-      return;
-    }
-
-    if (!file.type.startsWith('image/')) {
+    if (!file || !file.type.startsWith('image/')) {
       setError('❌ Only image files allowed.');
       return;
     }
 
     try {
-      console.log('📸 Original size:', file.size / 1024, 'KB');
-
-      // Compress the image
       const options = {
-        maxSizeMB: 0.5, // 500KB max
+        maxSizeMB: 0.5,
         maxWidthOrHeight: 1024,
         useWebWorker: true,
       };
-
       const compressedFile = await imageCompression(file, options);
-      console.log('✅ Compressed size:', compressedFile.size / 1024, 'KB');
-
-      // Convert to Base64
       const reader = new FileReader();
       reader.onloadend = () => {
         setFormData((prev) => ({ ...prev, image: reader.result }));
       };
-      reader.onerror = () => {
-        setError('❌ Failed to read image.');
-      };
       reader.readAsDataURL(compressedFile);
     } catch (err) {
-      console.error('❌ Compression error:', err);
-      setError('❌ Failed to compress image.');
+      setError('❌ Image compression failed.');
     }
   };
+
+  const handlePdfUpload = async (e) => {
+  const file = e.target.files[0];
+  if (!file || file.type !== 'application/pdf') {
+    setError('❌ Only PDF files allowed.');
+    return;
+  }
+
+  try {
+    setUploadingPdf(true);
+    const formDataToSend = new FormData();
+    formDataToSend.append("file", file);
+
+    // ✅ Correct way to access .env variable
+    const jwt ="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJiYTM2YjhhZS00NGUwLTQ0YjMtOTEzMS05MWRlZTJlZTA4ZDciLCJlbWFpbCI6Im11a2thbnRpc2FuZGVlcDEwNUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MSwiaWQiOiJGUkExIn0seyJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MSwiaWQiOiJOWUMxIn1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiMDc0YTZiMzE3NzU4YzU4MDMxZjMiLCJzY29wZWRLZXlTZWNyZXQiOiI0OTRmYWM1NTI1ZWE1MTE4NWViN2I2MTc5YjAxZDdhZGYyYjI1NGY2MjM1NmE4ZDk2ZWMwNGQ2NzJjYzcwNmRkIiwiZXhwIjoxNzgzNzYxODk0fQ.7VUrphNL8LBwDveRmKeW53lx8S2E9UtWkjMigAgMpi4"
+    console.log("JWT DEBUG:", jwt);
+    if (!jwt) {
+      setError('❌ JWT missing. Check your .env file.');
+      return;
+    }
+
+    const res = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
+      method: "POST",
+      headers: {
+        Authorization: jwt,
+      },
+      body: formDataToSend,
+    });
+
+    if (!res.ok) {
+      const errorResponse = await res.json();
+      console.error("Pinata Upload Error:", errorResponse);
+      throw new Error("Upload failed");
+    }
+
+    const data = await res.json();
+    const ipfsUrl = `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
+
+    setFormData((prev) => ({ ...prev, pdf: ipfsUrl }));
+    setError('');
+  } catch (err) {
+    console.error("❌ PDF Upload Error:", err);
+    setError("❌ PDF upload failed.");
+  } finally {
+    setUploadingPdf(false);
+  }
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    const { title, location, area, price, description } = formData;
-    if (!title || !location || !area || !price || !description)
-      return setError('❌ All fields are required.');
+    const { title, location, area, price, description, pdf } = formData;
 
-    if (!user) return setError('❌ Login required.');
+    console.log("📄 PDF:", pdf); // Debug
+
+    if (!title || !location || !area || !price || !description || !pdf) {
+      return setError('❌ All fields including PDF are required.');
+    }
 
     if (!backendRef.current) return setError('❌ Backend not ready.');
 
@@ -111,6 +142,7 @@ export default function RegisterLand() {
       description,
       registration_date: formData.registrationDate,
       image: formData.image || '',
+  pdf: formData.pdf || '', // ✅ ADD THIS LINE
       owner: user,
       original_owner: user,
       status: 'Owned',
@@ -120,16 +152,15 @@ export default function RegisterLand() {
       await backendRef.current.register_land(land);
       navigate('/dashboard');
     } catch (err) {
-      console.error('❌ Submit failed:', err);
+      console.error('❌ Backend error:', err);
       setError('❌ Failed to register land.');
     }
   };
 
   return (
-    <div>
     <div className="register-land-container">
       <h2 className="form-title">📜 Register New Land</h2>
-      <p className="form-subtitle">Fill the details to register your land on ICP.</p>
+      <p className="form-subtitle">Fill in the details and attach your land documents.</p>
 
       {error && <div className="form-error">{error}</div>}
 
@@ -155,9 +186,8 @@ export default function RegisterLand() {
         <label>📅 Registration Date</label>
         <input type="date" name="registrationDate" value={formData.registrationDate} onChange={handleChange} required />
 
-        <label>🖼️ Upload Land Image (Max 500KB after compression)</label>
+        <label>🖼️ Upload Land Image (Max 500KB)</label>
         <input type="file" accept="image/*" onChange={handleImageUpload} />
-
         {formData.image && (
           <img
             src={formData.image}
@@ -166,33 +196,24 @@ export default function RegisterLand() {
           />
         )}
 
-        <button type="submit" className="register-btn">Submit Land</button>
-      </form>
-     
-    </div>
-        {/* Footer */}
-      <footer className="footer" data-aos="stick" data-aos-delay="300">
-        <div className="footer-container">
-          <div className="footer-brand">
-            <h3>Virtual Land Registry</h3>
-            <p>
-              Enabling trusted virtual land transactions through the power of the Internet
-              Computer Protocol (ICP).
-            </p>
-          </div>
-
-          <div className="footer-links">
-            <a href="">Privacy Policy</a>
-            <a href="">Terms & Conditions</a>
-            <a href="">Support</a>
-          </div>
-
-          <p className="footer-copy">
-            &copy; {new Date().getFullYear()} Virtual Land Registry. Built for the decentralized
-            future.
+        <label>📄 Upload PDF Document (e.g., Ownership Proof)</label>
+        <input type="file" accept="application/pdf" onChange={handlePdfUpload} />
+        {formData.pdf && (
+          <p style={{ marginTop: '10px' }}>
+            ✅ PDF uploaded: <a href={formData.pdf} target="_blank" rel="noreferrer">View Document</a>
           </p>
-        </div>
-      </footer>
+        )}
+        {uploadingPdf && <p style={{ color: 'blue' }}>⏳ Uploading PDF...</p>}
+        
+
+        <button
+          type="submit"
+          className="register-btn"
+          disabled={!formData.pdf || uploadingPdf}
+        >
+          Submit Land
+        </button>
+      </form>
     </div>
   );
 }

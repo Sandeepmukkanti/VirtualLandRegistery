@@ -1,3 +1,5 @@
+// ViewLand.js (Updated to show PDF link)
+
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../Styles/ViewLand.css';
@@ -15,7 +17,7 @@ export default function ViewLand() {
     const fetchLand = async () => {
       try {
         const agent = new HttpAgent({ host: 'http://localhost:4943' });
-        await agent.fetchRootKey(); // Only in local development
+        await agent.fetchRootKey();
 
         const actor = Actor.createActor(idlFactory, {
           agent,
@@ -24,6 +26,8 @@ export default function ViewLand() {
 
         const result = await actor.get_land_by_id(id);
         if (result.length > 0) {
+          console.log('📄 Land fetched:', result[0]);
+          console.log('✅ PDF Value from backend:', result[0].pdf);
           setLand(result[0]);
         } else {
           setError('❌ Land not found!');
@@ -47,33 +51,42 @@ export default function ViewLand() {
 
   return (
     <div>
-    <div className="viewland-wrapper">
-      <h2 className="viewland-page-title">📍 Land Details</h2>
-      <div className="viewland-grid">
-        <div className="viewland-card glass-card">
-          <h3 className="viewland-title">Land #{land.id}</h3>
-          <p><strong>📌 Title:</strong> {land.title}</p>
-          <p><strong>🌍 Location:</strong> {land.location}</p>
-          <p><strong>📐 Area:</strong> {land.area} sq.ft</p>
-          <p><strong>💰 Price:</strong> ₹{land.price}</p>
-          <p><strong>📝 Description:</strong> {land.description}</p>
-          <p><strong>📅 Registered On:</strong> {land.registration_date}</p>
-          <p><strong>🧑 Owner:</strong> {land.owner}</p>
-          
-          <p><strong>Status:</strong> <span className={`status-badge ${land.status.toLowerCase()}`}>{land.status}</span></p>
+      <div className="viewland-wrapper">
+        <h2 className="viewland-page-title">📍 Land Details</h2>
+        <div className="viewland-grid">
+          <div className="viewland-card glass-card">
+            <h3 className="viewland-title">Land #{land.id}</h3>
+            <p><strong>📌 Title:</strong> {land.title}</p>
+            <p><strong>🌍 Location:</strong> {land.location}</p>
+            <p><strong>📐 Area:</strong> {land.area} sq.ft</p>
+            <p><strong>💰 Price:</strong> ₹{land.price}</p>
+            <p><strong>📝 Description:</strong> {land.description}</p>
+            <p><strong>📅 Registered On:</strong> {land.registration_date}</p>
+            <p><strong>🧑 Owner:</strong> {land.owner}</p>
 
-          {land.image && (
-            <img
-              src={land.image}
-              alt="Land"
-              style={{ marginTop: '10px', maxWidth: '300px', borderRadius: '10px' }}
-            />
-          )}
+
+{land.pdf && land.pdf.length > 0 && (
+  <p>
+    <strong>📄 Document:</strong>{' '}
+    <a href={land.pdf} target="_blank" rel="noopener noreferrer">
+      View PDF
+    </a>
+  </p>
+)}
+
+            <p><strong>Status:</strong> <span className={`status-badge ${land.status.toLowerCase()}`}>{land.status}</span></p>
+
+            {land.image && (
+              <img
+                src={land.image}
+                alt="Land"
+                style={{ marginTop: '10px', maxWidth: '300px', borderRadius: '10px' }}
+              />
+            )}
+          </div>
         </div>
       </div>
-         
-    </div>
-    {/* Footer */}
+
       <footer className="footer" data-aos="stick" data-aos-delay="300">
         <div className="footer-container">
           <div className="footer-brand">

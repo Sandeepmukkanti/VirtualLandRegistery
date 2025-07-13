@@ -95,7 +95,16 @@ export default function BuyLand() {
                   <p><strong>💰 Price:</strong> ₹{land.price}</p>
                   <p><strong>🧑 Owner:</strong> {land.owner}</p>
                   <p><strong>📝 Description:</strong> {land.description}</p>
-                  <p><strong>📅 Registered On:</strong> {land.registration_date}</p>
+                 <p><strong>📅 Registered On:</strong> {land.registration_date}</p>
+
+            {land.pdf && (
+            <p>
+    <strong>📄 Document:</strong>{' '}
+    <a href={land.pdf} target="_blank" rel="noopener noreferrer">
+      View PDF
+    </a>
+  </p>
+)}
 
                   <div className="buyland-actions">
                     <Link to={`/land/${land.id}`}>

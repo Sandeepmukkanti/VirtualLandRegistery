@@ -18,7 +18,9 @@
   "dependencies": {
     "@dfinity/agent": "^2.4.1",
     "@dfinity/auth-client": "^2.4.1",
-    "browser-image-compression": "^2.0.2"
+    "axios": "^1.10.0",
+    "browser-image-compression": "^2.0.2",
+    "web3.storage": "^4.5.5"
   },
   "devDependencies": {
     "copyfiles": "^2.4.1"
