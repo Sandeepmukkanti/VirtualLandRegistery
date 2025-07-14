@@ -7,7 +7,7 @@ import '../Styles/ViewLand.css';
 import { Actor, HttpAgent } from '@dfinity/agent';
 import { idlFactory } from '../declarations/virtual_land_registry_backend/virtual_land_registry_backend.did.js';
 import canisterIds from './canister_ids.json';
-
+import { Link } from 'react-router-dom';
 export default function ViewLand() {
   const { id } = useParams();
   const [land, setLand] = useState(null);
@@ -98,9 +98,9 @@ export default function ViewLand() {
           </div>
 
           <div className="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms & Conditions</a>
-            <a href="#">Support</a>
+           <Link to="/privacy">Privacy Policy</Link>
+  <Link to="/terms">Terms & Conditions</Link>
+  <Link to="/support">Support</Link>
           </div>
 
           <p className="footer-copy">

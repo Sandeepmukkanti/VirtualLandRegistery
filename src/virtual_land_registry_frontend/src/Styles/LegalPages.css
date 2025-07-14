@@ -1,0 +1,81 @@
+/* ===== Legal Pages (Privacy, Terms, Support) ===== */
+.legal-page {
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 2.5rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.07);
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.7;
+  color: #1e293b;
+}
+
+.legal-page h2 {
+  font-size: 2rem;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+.legal-page h3 {
+  font-size: 1.4rem;
+  color: #334155;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.legal-page p {
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+.legal-page ul {
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.legal-page li {
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+
+/* Support-specific styles */
+.support-page .contact-info {
+  margin-top: 2rem;
+}
+
+.support-page .contact-info p {
+  margin: 0.3rem 0;
+}
+
+.legal-page a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.legal-page a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 768px) {
+  .legal-page {
+    margin: 40px 20px;
+    padding: 1.5rem;
+  }
+
+  .legal-page h2 {
+    font-size: 1.6rem;
+  }
+
+  .legal-page h3 {
+    font-size: 1.2rem;
+  }
+
+  .legal-page p,
+  .legal-page li {
+    font-size: 1rem;
+  }
+}

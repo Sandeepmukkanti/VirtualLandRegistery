@@ -157,9 +157,9 @@ export default function BuyLand() {
           </div>
 
           <div className="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms & Conditions</a>
-            <a href="#">Support</a>
+ <Link to="/privacy">Privacy Policy</Link>
+  <Link to="/terms">Terms & Conditions</Link>
+  <Link to="/support">Support</Link>
           </div>
 
           <p className="footer-copy">

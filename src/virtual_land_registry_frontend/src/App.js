@@ -5,6 +5,9 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import RegisterLand from './pages/RegisterLand';
 import BuyLand from './pages/BuyLand';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
+import Support from './pages/Support';
 
 import AOS from 'aos';
 
@@ -36,6 +39,9 @@ function App() {
     
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/land/:id" element={<ViewLand/>} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/support" element={<Support />} />
 
       </Routes>
     </Router>

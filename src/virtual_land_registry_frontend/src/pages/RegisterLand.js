@@ -6,7 +6,7 @@ import { HttpAgent, Actor } from '@dfinity/agent';
 import { idlFactory } from '../declarations/virtual_land_registry_backend/virtual_land_registry_backend.did.js';
 import canisterIds from './canister_ids.json';
 import imageCompression from 'browser-image-compression';
-
+import { Link } from 'react-router-dom';
 export default function RegisterLand() {
   const { user } = useUser();
   const navigate = useNavigate();
@@ -158,6 +158,7 @@ export default function RegisterLand() {
   };
 
   return (
+    <div>
     <div className="register-land-container">
       <h2 className="form-title">📜 Register New Land</h2>
       <p className="form-subtitle">Fill in the details and attach your land documents.</p>
@@ -214,6 +215,30 @@ export default function RegisterLand() {
           Submit Land
         </button>
       </form>
+    </div>
+
+    <footer className="footer" data-aos="stick" data-aos-delay="300">
+        <div className="footer-container">
+          <div className="footer-brand">
+            <h3>Virtual Land Registry</h3>
+            <p>
+              Enabling trusted virtual land transactions through the power of the Internet
+              Computer Protocol (ICP).
+            </p>
+          </div>
+
+          <div className="footer-links">
+             <Link to="/privacy">Privacy Policy</Link>
+  <Link to="/terms">Terms & Conditions</Link>
+  <Link to="/support">Support</Link>
+          </div>
+
+          <p className="footer-copy">
+            &copy; {new Date().getFullYear()} Virtual Land Registry. Built for the decentralized
+            future.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -46,3 +46,65 @@
 .login-button:hover {
   background-color: #3434ee;
 }
+
+
+/* === Responsive Design for Login Page === */
+@media (max-width: 950px) {
+  .login-container {
+    padding: 1rem;
+    background-position: center center;
+  }
+
+  .login-box {
+    max-width: 90%;
+    padding: 2rem;
+  }
+
+  .login-title {
+    font-size: 1.6rem;
+  }
+
+  .login-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .login-button {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .login-box {
+    padding: 1.5rem 1rem;
+    border-radius: 1rem;
+  }
+
+  .login-title {
+    font-size: 1.4rem;
+  }
+
+  .login-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .login-button {
+    font-size: 0.9rem;
+    padding: 0.65rem 1.2rem;
+    border-radius: 0.5rem;
+  }
+
+  .footer {
+    padding: 20px 10px;
+    font-size: 13px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+  }
+}

@@ -1,20 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { user, logout } = useUser();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <nav className="nav">
-      <h1>🌍 Virtual Land Registry</h1>
-      <ul>
+      <div className="nav-brand">
+        <h1>🌍 Virtual Land Registry</h1>
+        <div className="menu-toggle" onClick={toggleMenu}>
+          &#9776;
+        </div>
+      </div>
+
+      <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
         {!user ? (
           <>
             <li><Link className="nav-link" to="/">Home</Link></li>

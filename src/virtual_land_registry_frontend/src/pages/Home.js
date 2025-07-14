@@ -1,6 +1,7 @@
 import React from 'react';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   const { user } = useUser();
@@ -121,9 +122,9 @@ export default function Home() {
           </div>
 
           <div className="footer-links">
-            <a href="">Privacy Policy</a>
-            <a href="">Terms & Conditions</a>
-            <a href="">Support</a>
+             <Link to="/privacy">Privacy Policy</Link>
+  <Link to="/terms">Terms & Conditions</Link>
+  <Link to="/support">Support</Link>
           </div>
 
           <p className="footer-copy">

@@ -5,46 +5,111 @@ body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
 }
-
-/* === Navbar Styling === */
+/* === General Navbar Styles === */
 .nav {
   background-color: #1e3a8a;
-  padding: 15px 20px;
+  padding: 20px 24px;
   color: white;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* === Brand and Toggle Row === */
+.nav-brand {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  padding: 0;
+.nav h1 {
+  font-size: 2rem;
   margin: 0;
 }
 
-/* Common style for all links and logout button */
+/* === Hamburger Toggle === */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+}
+
+/* === Nav Links === */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+}
+
 .nav-link {
   color: white;
   text-decoration: none;
-  font-weight: bold;
-  font-size: x-large;
+  font-weight: 600;
+  font-size: 22px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
   font-family: inherit;
 }
 
-/* Hover effect */
 .nav-link:hover {
   text-decoration: underline;
 }
 
-/* Optional: remove default button outline */
 .logout-btn:focus {
   outline: none;
+}
+
+/* === Mobile Styles (≤ 950px) === */
+@media (max-width: 950px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links li {
+    margin-bottom: 10px;
+    text-align: left;
+  }
+}
+
+/* === Desktop Styles (> 950px) === */
+@media (min-width: 951px) {
+  .nav {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-links {
+    display: flex !important;
+    flex-direction: row;
+    margin-top: 0;
+  }
+
+  .nav-links li {
+    margin-bottom: 0;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
 }
 
 
@@ -337,4 +402,99 @@ form button {
 
 form button:hover {
   background-color: #374ea2;
+}
+
+
+/* === Responsive Styles for <= 950px === */
+@media (max-width: 950px) {
+  .home-subtitle {
+    font-size: 4vh;
+  }
+
+  .home-mission {
+    font-size: 2.5vh;
+  }
+
+  .cta-button {
+    width: 90%;
+    max-width: 300px;
+  }
+
+  .why-cards {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .steps-container {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-container {
+    text-align: center;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .why-card,
+  .feature-card,
+  .step {
+    padding: 20px;
+  }
+
+  .why-card h3,
+  .feature-card h3,
+  .step h3 {
+    font-size: 1rem;
+  }
+
+  .why-card p,
+  .feature-card p,
+  .step p {
+    font-size: 0.9rem;
+  }
+}
+
+/* === Responsive Styles for <= 600px (Mobile) === */
+@media (max-width: 600px) {
+  .home-container {
+    height: auto;
+    padding: 30px 15px;
+  }
+
+  .home-subtitle {
+    font-size: 3.5vh;
+  }
+
+  .home-mission {
+    font-size: 2.2vh;
+  }
+
+  .why-heading,
+  .how-heading,
+  .features-heading {
+    font-size: 1.5rem;
+  }
+
+  .cta-button {
+    font-size: 15px;
+    padding: 10px 20px;
+  }
+
+  .footer-links a {
+    display: block;
+    margin: 10px 0;
+  }
 }

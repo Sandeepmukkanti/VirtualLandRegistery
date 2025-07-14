@@ -70,3 +70,66 @@
   text-align: center;
   margin-bottom: 1rem;
 }
+
+/* === Responsive Design for Register Land Form === */
+@media (max-width: 950px) {
+  .register-land-container {
+    padding: 1.5rem;
+    max-width: 90%;
+    margin: 1rem auto;
+  }
+
+  .form-title {
+    font-size: 1.6rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .register-form input,
+  .register-form textarea {
+    font-size: 0.95rem;
+    padding: 9px;
+  }
+
+  .register-btn {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .register-land-container {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .form-title {
+    font-size: 1.4rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .register-form label {
+    font-size: 0.95rem;
+  }
+
+  .register-form input,
+  .register-form textarea {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .register-btn {
+    font-size: 0.9rem;
+    padding: 9px;
+  }
+
+  .form-error,
+  .form-success {
+    font-size: 0.85rem;
+  }
+}

@@ -61,3 +61,57 @@
   background-color: #fee2e2;
   color: #991b1b;
 }
+
+/* === Responsive Design for View Land Page === */
+@media (max-width: 950px) {
+  .viewland-wrapper {
+    padding: 1.5rem 1rem;
+  }
+
+  .viewland-page-title {
+    font-size: 1.7rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .viewland-grid {
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .viewland-title {
+    font-size: 1.2rem;
+  }
+
+  .status-badge {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .viewland-wrapper {
+    padding: 1rem;
+  }
+
+  .viewland-page-title {
+    font-size: 1.5rem;
+  }
+
+  .viewland-grid {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .viewland-card {
+    padding: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .viewland-title {
+    font-size: 1.1rem;
+  }
+
+  .status-badge {
+    padding: 3px 6px;
+    font-size: 0.8rem;
+  }
+}

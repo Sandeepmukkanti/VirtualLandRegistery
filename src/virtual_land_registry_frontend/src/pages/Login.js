@@ -1,7 +1,7 @@
 import React from 'react';
 import { AuthClient } from '@dfinity/auth-client';
 import '../Styles/Login.css';
-
+import { Link } from 'react-router-dom';
 export default function Login() {
   const handleLogin = async () => {
     const authClient = await AuthClient.create();
@@ -36,9 +36,9 @@ export default function Login() {
           </div>
 
           <div className="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms & Conditions</a>
-            <a href="#">Support</a>
+             <Link to="/privacy">Privacy Policy</Link>
+  <Link to="/terms">Terms & Conditions</Link>
+  <Link to="/support">Support</Link>
           </div>
 
           <p className="footer-copy">
